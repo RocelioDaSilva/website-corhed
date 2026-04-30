@@ -10,7 +10,33 @@
     <meta property="og:title" content="Corhed - Gestão de Meios de Pagamento e Soluções para Bancos">
     <meta property="og:description" content="Soluções especializadas em gestão de meios de pagamento eletrónica e venda de consumíveis para bancos e instituições financeiras.">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://corhed.com">
+    <meta property="og:image" content="https://corhed.com/assets/img/og-image.svg">
+    <meta property="og:site_name" content="Corhed">
+    <meta property="og:locale" content="pt_BR">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Corhed - Gestão de Meios de Pagamento e Soluções para Bancos">
+    <meta name="twitter:description" content="Soluções especializadas em gestão de meios de pagamento eletrónica e venda de consumíveis para bancos e instituições financeiras.">
+    <meta name="twitter:image" content="https://corhed.com/assets/img/og-image.svg">
+    <link rel="canonical" href="https://corhed.com">
     <link rel="icon" href="../assets/img/corhed-logo.png" type="image/png">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Corhed",
+        "url": "https://corhed.com",
+        "logo": "https://corhed.com/assets/img/corhed-logo.png",
+        "description": "Soluções especializadas em gestão de meios de pagamento eletrónica e venda de consumíveis para bancos e instituições financeiras.",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+55-11-3000-0000",
+            "contactType": "customer service",
+            "areaServed": "BR",
+            "availableLanguage": "Portuguese"
+        }
+    }
+    </script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -54,8 +80,20 @@
         nav { display: flex; gap: 2rem; list-style: none; }
         nav a { color: white; text-decoration: none; transition: color 0.3s; font-weight: 500; }
         nav a:hover { color: #C00000; }
-        .mobile-menu { display: none; flex-direction: column; cursor: pointer; gap: 5px; }
+        .mobile-menu {
+            display: none; flex-direction: column; cursor: pointer; gap: 5px;
+            background: none; border: none; padding: 5px;
+        }
         .mobile-menu span { width: 25px; height: 3px; background: white; border-radius: 3px; transition: 0.3s; }
+        .mobile-menu.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+        .mobile-menu.active span:nth-child(2) { opacity: 0; }
+        .mobile-menu.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+
+        .skip-nav {
+            position: absolute; top: -100px; left: 0; background: #C00000; color: white;
+            padding: 1rem; z-index: 1000; transition: top 0.3s;
+        }
+        .skip-nav:focus { top: 0; }
 
         /* === HERO === */
         .hero {
@@ -234,6 +272,14 @@
         .contact-item a:hover { text-decoration: underline; }
 
         /* === FORM === */
+        .form-feedback {
+            padding: 1rem; border-radius: 4px; margin-bottom: 1rem;
+            display: none; font-weight: 500; text-align: center;
+        }
+        .form-feedback.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; display: block; }
+        .form-feedback.error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; display: block; }
+        .form-submit.loading { opacity: 0.7; cursor: not-allowed; pointer-events: none; }
+
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; color: #1F4E79; font-weight: 500; }
         .form-group input, .form-group textarea, .form-group select {
@@ -273,6 +319,25 @@
         .back-to-top.show { opacity: 1; visibility: visible; }
         .back-to-top:hover { background-color: #8B0000; transform: translateY(-2px); }
 
+        /* === WHATSAPP BUTTON === */
+        .whatsapp-float {
+            position: fixed; bottom: 100px; right: 30px; width: 60px; height: 60px;
+            background-color: #25d366; color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 30px; box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000; transition: all 0.3s;
+        }
+        .whatsapp-float:hover {
+            background-color: #128c7e; transform: scale(1.1);
+            color: white;
+        }
+        .whatsapp-float svg { width: 35px; height: 35px; fill: currentColor; }
+
+        @media (max-width: 768px) {
+            .whatsapp-float { bottom: 80px; right: 20px; width: 50px; height: 50px; font-size: 25px; }
+            .whatsapp-float svg { width: 30px; height: 30px; }
+        }
+
         /* === ANIMATIONS === */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
@@ -311,12 +376,13 @@
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-nav">Pular para o conteúdo principal</a>
 
     <!-- LOADING SCREEN -->
     <div class="loading" id="loading"><div class="spinner"></div></div>
 
     <!-- HEADER -->
-    <header>
+    <header role="banner">
         <div class="header-content">
             <div class="logo">
                 <img src="../assets/img/corhed-logo.png" alt="Corhed logo" onerror="this.style.display='none'">
@@ -328,12 +394,13 @@
                 <a href="#why-us">Por Que Nos Escolher</a>
                 <a href="#contact">Contato</a>
             </nav>
-            <div class="mobile-menu" id="mobile-menu-btn">
+            <button class="mobile-menu" id="mobile-menu-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-menu">
                 <span></span><span></span><span></span>
-            </div>
+            </button>
         </div>
     </header>
 
+    <main id="main-content">
     <!-- HERO -->
     <section class="hero">
         <div class="hero-content">
@@ -482,6 +549,7 @@
         <div class="newsletter-content">
             <h2>Fique por Dentro das Inovações em Pagamentos</h2>
             <p>Receba atualizações sobre novas tecnologias, regulamentações e melhores práticas para instituições bancárias</p>
+            <div id="newsletter-feedback" class="form-feedback"></div>
             <form class="newsletter-form" onsubmit="handleNewsletter(event)">
                 <input type="email" class="newsletter-input" placeholder="Seu e-mail institucional" required>
                 <button type="submit" class="newsletter-submit">Inscrever-se</button>
@@ -502,6 +570,7 @@
             </div>
             <div>
                 <h3 style="color:#1F4E79;margin-bottom:1.5rem;">Envie uma Mensagem</h3>
+                <div id="contact-feedback" class="form-feedback"></div>
                 <form method="POST" action="#" onsubmit="handleSubmit(event)">
                     <div class="form-group"><label for="name">Nome Completo *</label><input type="text" id="name" name="name" required></div>
                     <div class="form-group"><label for="email">E-mail *</label><input type="email" id="email" name="email" required></div>
@@ -526,13 +595,32 @@
         </div>
     </section>
 
+    </main>
+
+    <!-- WHATSAPP FLOAT -->
+    <a href="https://wa.me/551130000000" class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Fale conosco no WhatsApp">
+        <svg viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.7 17.8 69.4 27.2 106.2 27.2h.1c122.3 0 222-99.6 222-222 0-59.3-23.2-115.1-65.1-157.1zM223.9 446.6c-33.1 0-65.6-8.9-93.5-25.7l-6.7-4-69.6 18.3 18.7-67.9-4.4-7c-18.4-29.4-28.1-63.3-28.1-98.3 0-101.7 82.6-184.3 184.3-184.3 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 54 81.2 54 130.5 0 101.8-82.6 184.2-184 184.2zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.1-16.4-14.6-27.4-32.7-30.6-38.2-3.2-5.6-.3-8.6 2.4-11.3 2.5-2.6 5.6-6.5 8.3-9.8 2.8-3.3 3.7-5.6 5.6-9.3 1.9-3.7.9-6.9-.5-9.8-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 8.4-5.1 7-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.3 5.7 23.6 9.2 31.7 11.7 13.3 4.2 25.4 3.6 35 2.2 10.7-1.5 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+    </a>
+
     <!-- FOOTER -->
-    <footer>
+    <footer role="contentinfo">
         <div class="footer-content">
             <div class="footer-social">
-                <a href="#" title="LinkedIn">💼</a>
-                <a href="#" title="Facebook">📘</a>
-                <a href="#" title="Instagram">📷</a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="LinkedIn" style="color:#0077b5">
+                    <svg viewBox="0 0 448 512" style="width:24px;height:24px;fill:currentColor"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 26.5-34.5 54.5-34.5 58.3 0 69.1 38.3 69.1 88.1V416z"/></svg>
+                </a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" title="Facebook" style="color:#1877f2">
+                    <svg viewBox="0 0 320 512" style="width:24px;height:24px;fill:currentColor"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg>
+                </a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" title="Instagram" style="color:#e4405f">
+                    <svg viewBox="0 0 448 512" style="width:24px;height:24px;fill:currentColor"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+                </a>
+                <a href="https://wa.me/551130000000" target="_blank" rel="noopener noreferrer" title="WhatsApp" style="color:#25d366">
+                    <svg viewBox="0 0 448 512" style="width:24px;height:24px;fill:currentColor"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.7 17.8 69.4 27.2 106.2 27.2h.1c122.3 0 222-99.6 222-222 0-59.3-23.2-115.1-65.1-157.1zM223.9 446.6c-33.1 0-65.6-8.9-93.5-25.7l-6.7-4-69.6 18.3 18.7-67.9-4.4-7c-18.4-29.4-28.1-63.3-28.1-98.3 0-101.7 82.6-184.3 184.3-184.3 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 54 81.2 54 130.5 0 101.8-82.6 184.2-184 184.2zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.1-16.4-14.6-27.4-32.7-30.6-38.2-3.2-5.6-.3-8.6 2.4-11.3 2.5-2.6 5.6-6.5 8.3-9.8 2.8-3.3 3.7-5.6 5.6-9.3 1.9-3.7.9-6.9-.5-9.8-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 8.4-5.1 7-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.3 5.7 23.6 9.2 31.7 11.7 13.3 4.2 25.4 3.6 35 2.2 10.7-1.5 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+                </a>
+                <a href="mailto:contato@corhed.com" title="Email" style="color:#ffffff">
+                    <svg viewBox="0 0 512 512" style="width:24px;height:24px;fill:currentColor"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 21.5 64 48 64H464c26.5 0 48-28.7 48-64V176L285.5 342.1c-17.3 12.9-43.7 12.9-61 0L0 176z"/></svg>
+                </a>
             </div>
             <div class="footer-links">
                 <a href="#services">Serviços</a>
@@ -558,8 +646,18 @@
         // Mobile menu
         const menuBtn = document.getElementById('mobile-menu-btn');
         const nav = document.getElementById('nav-menu');
-        menuBtn.addEventListener('click', () => { nav.classList.toggle('active'); menuBtn.classList.toggle('active'); });
-        nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { nav.classList.remove('active'); menuBtn.classList.remove('active'); }));
+        menuBtn.addEventListener('click', () => {
+            const isActive = nav.classList.toggle('active');
+            menuBtn.classList.toggle('active');
+            menuBtn.setAttribute('aria-expanded', isActive);
+            menuBtn.setAttribute('aria-label', isActive ? 'Fechar menu' : 'Abrir menu');
+        });
+        nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+            nav.classList.remove('active');
+            menuBtn.classList.remove('active');
+            menuBtn.setAttribute('aria-expanded', 'false');
+            menuBtn.setAttribute('aria-label', 'Abrir menu');
+        }));
 
         // Back to top
         const btt = document.getElementById('back-to-top');
@@ -578,6 +676,9 @@
         async function handleSubmit(e) {
             e.preventDefault();
             const form = e.target;
+            const feedback = document.getElementById('contact-feedback');
+            const submitBtn = form.querySelector('button[type="submit"]');
+
             const data = {
                 name: form.name.value,
                 email: form.email.value,
@@ -585,6 +686,12 @@
                 service: form.service.value,
                 message: form.message.value
             };
+
+            feedback.style.display = 'none';
+            submitBtn.classList.add('loading');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Enviando...';
+
             try {
                 const res = await fetch('http://localhost:3001/api/contact', {
                     method: 'POST',
@@ -593,13 +700,20 @@
                 });
                 const json = await res.json();
                 if (res.ok) {
-                    alert('Obrigado por entrar em contato! Responderemos em breve.');
+                    feedback.textContent = 'Obrigado por entrar em contato! Responderemos em breve.';
+                    feedback.className = 'form-feedback success';
                     form.reset();
                 } else {
-                    alert('Erro ao enviar: ' + (json.error || res.statusText));
+                    feedback.textContent = 'Erro ao enviar: ' + (json.error || 'Erro no servidor');
+                    feedback.className = 'form-feedback error';
                 }
             } catch (err) {
-                alert('Erro de rede: ' + err.message);
+                feedback.textContent = 'Erro de rede: Verifique sua conexão.';
+                feedback.className = 'form-feedback error';
+            } finally {
+                feedback.style.display = 'block';
+                submitBtn.classList.remove('loading');
+                submitBtn.textContent = originalText;
             }
         }
 
@@ -607,9 +721,23 @@
         async function handleNewsletter(e) {
             e.preventDefault();
             const form = e.target;
+            const feedback = document.getElementById('newsletter-feedback');
+            const submitBtn = form.querySelector('button[type="submit"]');
             const input = form.querySelector('input[type="email"]');
             const email = input ? input.value : '';
-            if (!email) { alert('Por favor informe o seu e-mail.'); return; }
+
+            if (!email) {
+                feedback.textContent = 'Por favor informe o seu e-mail.';
+                feedback.className = 'form-feedback error';
+                feedback.style.display = 'block';
+                return;
+            }
+
+            feedback.style.display = 'none';
+            submitBtn.classList.add('loading');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '...';
+
             try {
                 const res = await fetch('http://localhost:3001/api/newsletter', {
                     method: 'POST',
@@ -618,13 +746,20 @@
                 });
                 const json = await res.json();
                 if (res.ok) {
-                    alert('Inscrição realizada com sucesso!');
+                    feedback.textContent = 'Inscrição realizada com sucesso!';
+                    feedback.className = 'form-feedback success';
                     form.reset();
                 } else {
-                    alert('Erro ao inscrever: ' + (json.error || res.statusText));
+                    feedback.textContent = 'Erro ao inscrever: ' + (json.error || 'Erro no servidor');
+                    feedback.className = 'form-feedback error';
                 }
             } catch (err) {
-                alert('Erro de rede: ' + err.message);
+                feedback.textContent = 'Erro de rede: Verifique sua conexão.';
+                feedback.className = 'form-feedback error';
+            } finally {
+                feedback.style.display = 'block';
+                submitBtn.classList.remove('loading');
+                submitBtn.textContent = originalText;
             }
         }
     </script>
