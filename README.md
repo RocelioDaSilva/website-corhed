@@ -2,7 +2,7 @@
 
 Professional website projects and reusable templates. Contains two clients: **Corhed** (real B2B banking client, Portuguese) and **YourBusiness** (English template).
 
-**Live demo:** https://roceliodasilva.github.io/website-building/
+**Live demo:** https://roceliodasilva.github.io/website-corhed/
 
 ---
 
@@ -10,7 +10,7 @@ Professional website projects and reusable templates. Contains two clients: **Co
 
 ```
 website building/
-├── corhed/               # Corhed client — landing page (pt-BR)
+├── corhed/               # CORHED client — landing page (pt-AO)
 │   └── index.html        # Landing page CORHED para Angola
 │
 ├── template/             # Reusable YourBusiness template (English)
@@ -67,12 +67,8 @@ npm start
 Then open: http://localhost:3000/corhed/
 
 ### Deploy to GitHub Pages
-```bash
-# Push to main (auto-deploys gh-pages if configured)
-git add -A
-git commit -m "Update"
-git push origin main
-```
+
+Pushing to `main` runs `.github/workflows/deploy-pages.yml`, which publishes the static site to GitHub Pages. The root URL redirects to the CORHED landing page.
 
 ---
 
@@ -81,7 +77,7 @@ git push origin main
 **Company:** Corhed - Comércio e Serviços LDA  
 **Specialty:** Electronic payment management + banking consumables  
 **File:** `corhed/index.html`  
-**Live:** https://roceliodasilva.github.io/website-building/
+**Live:** https://roceliodasilva.github.io/website-corhed/
 
 **Brand colors:**
 - Primary: `#1F4E79` (navy blue)
@@ -123,7 +119,7 @@ English B2B template with 7 pages + legal pages. Ready to fork and rebrand for a
 Transfer the `corhed/` folder to phone via USB or Google Drive, then open `index.html` in mobile browser.
 
 **Option 2 — GitHub Pages (online, zero setup):**
-Share this link: https://roceliodasilva.github.io/website-building/
+Share this link: https://roceliodasilva.github.io/website-corhed/
 
 **Option 3 — Local server on same WiFi:**
 ```powershell
@@ -276,18 +272,8 @@ vercel --prod
 ```
 
 #### 3. GitHub Pages
-```bash
-# Instale gh-pages
-npm install -g gh-pages
 
-# Adicione ao package.json:
-"scripts": {
-  "deploy": "gh-pages -d ."
-}
-
-# Execute
-npm run deploy
-```
+O deploy é feito automaticamente pelo GitHub Actions sempre que há um push para `main`. Consulte `.github/workflows/deploy-pages.yml` e a página **Actions** do repositório para acompanhar o estado da publicação.
 
 #### 4. Hospedagem Tradicional
 - Faça upload de todos os arquivos `.html`, `.css`, `.js` e imagens
