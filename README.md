@@ -68,7 +68,7 @@ Then open: http://localhost:3000/corhed/
 
 ### Deploy to GitHub Pages
 
-Pushing to `main` runs `.github/workflows/deploy-pages.yml`, which publishes the static site to GitHub Pages. The root URL redirects to the CORHED landing page.
+Before the first deployment, open **Settings → Pages** and set the build source to **GitHub Actions**. After that, every push to `main` runs `.github/workflows/deploy-pages.yml` and publishes the static site. The root URL redirects to the CORHED landing page.
 
 ---
 
@@ -273,7 +273,7 @@ vercel --prod
 
 #### 3. GitHub Pages
 
-O deploy é feito automaticamente pelo GitHub Actions sempre que há um push para `main`. Consulte `.github/workflows/deploy-pages.yml` e a página **Actions** do repositório para acompanhar o estado da publicação.
+Configure **Settings → Pages → Build and deployment → Source** como **GitHub Actions**. Depois, o deploy é automático a cada push para `main`; acompanhe a execução em **Actions**.
 
 #### 4. Hospedagem Tradicional
 - Faça upload de todos os arquivos `.html`, `.css`, `.js` e imagens
