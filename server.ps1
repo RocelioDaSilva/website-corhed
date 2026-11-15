@@ -40,7 +40,7 @@ while ($listener.IsListening) {
     
     $requestPath = $request.Url.LocalPath
     if ($requestPath -eq "/") {
-        $requestPath = "/index.html"
+        $requestPath = "/corhed/index.html"
     }
     
     $filePath = Join-Path $docRoot ($requestPath -replace "^/", "")

@@ -11,7 +11,7 @@ Professional website projects and reusable templates. Contains two clients: **Co
 ```
 website building/
 ├── corhed/               # Corhed client — landing page (pt-BR)
-│   └── index.html        # Best merged version (banking-specific content)
+│   └── index.html        # Landing page CORHED para Angola
 │
 ├── template/             # Reusable YourBusiness template (English)
 │   ├── index.html
@@ -64,6 +64,7 @@ Then open: http://localhost:8000/corhed/
 npm install
 npm start
 ```
+Then open: http://localhost:3000/corhed/
 
 ### Deploy to GitHub Pages
 ```bash
